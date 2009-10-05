@@ -2,7 +2,7 @@ $Id$
 
 Directory structure:
 
-<classname><semester><year>/
+<semester><year><classname>/
 	<pertinent_subdirs> From convention adopted on the class
 
 
