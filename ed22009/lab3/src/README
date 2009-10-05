@@ -1,0 +1,18 @@
+Para compilar (em sistemas unix-like preparados com GNU Make, GCC e
+G++), é preciso ter em mente que são programas bastante parecidos, são
+implementações diferentes de uma mesma idéia.
+
+Dentro de imp_1/ os códigos em C e C++ da primeira implementação; do
+imp_2/, os códigos da segunda; de imp_3/, da terceira.
+
+Para gerar o código da implementação X em C, faça:
+
+make listaecX
+
+Para gerar o código da implementação X em C++, faça:
+
+make listaecppX
+
+Onde X = no. da implementação desejada. Execute os comandos acima de
+dentro do diretório superior aos imp_X/, onde está o Makefile.
+
