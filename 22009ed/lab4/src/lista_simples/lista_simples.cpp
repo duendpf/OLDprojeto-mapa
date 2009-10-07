@@ -148,9 +148,10 @@ Nodo *ListaSimples::Remover_apos(Nodo *p) {
 	else if(Pa == tail) {
 		tail = p;
 		p->setNext(NULL);
+		nelem--;
 		return(Pa);
-	}
-	p->setNext(Pa);
+	} else
+		p->setNext(Pa->getNext());
 	nelem--;
 	return Pa;
 }
@@ -168,44 +169,37 @@ int ListaSimples::Tamanho() {
 }
 
 bool ListaSimples::Inserir(int x, Elem e) {
-	/* na minha lista, só pode inserir em posicoes ja existentes na lista,
-	 * ou seja, passou de nelem nao insere */
-	if(x < 1 || x > nelem) 
-		return(false);
-	
 	Nodo *Pa;
 
-	if(head == NULL) {
+	if(x == 1 && head == NULL) {
 		Pa = new NodoSimples(e, NULL);
 		head = tail = Pa;
 		nelem++;
 		return(true);
-	}
-	/* posso querer inserir na 1a pos. mesmo se tail != head */
-	if(head == tail || x == 1) {
+	} else if(x == 1 && head == tail) {
 		Pa = new NodoSimples(e, head);
+		tail = head;
 		head = Pa;
 		nelem++;
 		return(true);
 	}
-
-	/* chega aqui com x >= 2 */
-	Pa = new NodoSimples(e);
-	Nodo *tmp = head;
+	/* so insere apos o tamanho atual se for exatamente um apos nelem */
+	if(x < 1 || x > (nelem+1))
+		return(false);
+	/* posso inserir em 1 mesmo que a lista tenha mais de 1 elem. */
 	int i = 1;
-	for(i; i <= nelem; i++) {
-		if(i == x-1) {
-			/* contempla o caso de ser pos x == pos tail */
-			Pa->setNext(tmp->getNext());
-			tmp->setNext(Pa);
-			nelem++;
-			return(true);
+	Nodo *tmp = head;
+	for(i; i <= x; i++) {
+		if(i == (x - 1)) {
+			/* insere antes do elemento do qual tomora a posicao */
+				Pa = new NodoSimples(e, tmp->getNext());
+				tmp->setNext(Pa);
+				nelem++;
+				return(true);
 		}
 		tmp = tmp->getNext();
 	}
 
-	/* se chegar aqui ... epa!!! erro hein!!! */
-	return(false);
 }
 
 int ListaSimples::Localizar(Elem e) {

@@ -70,10 +70,21 @@ gettimeofday(&start, NULL);
 
 gettimeofday(&end, NULL);
 
-double elapsed = (end.tv_usec - start.tv_usec) / 1000000.0;
+double elapsed = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
 
 Assim, temos elapsed em segundos. Adotei este código para meu benchmark,
 o que torna meu código preso ao unix. Talvez o Cygwin compile esse
 código sem problemas, mas não tive como testar ainda.
 
+As funções Inserir_apos() e Remover_apos() trabalham com os nós em si,
+recebem-nos como parâmetro. A idéia de nó não existe para o usuário,
+portanto não faz sentido fazer um benchmark de uma idéia que é
+intrinseca a lista. Faria sentido se essas funções buscassem por um
+elemento ou já recebessem a posição desse elemento e fizessem seu
+trabalho, pois não adianta criar a abstração lista e fazer com que o
+usuário dessa abstração tenha que trabalhar com conceitos internos à
+ela. Tanto é assim que as funções foram implementadas, mas nunca usadas
+na ListaSimples nem na ListaDupla, preferi criar uma função que remova
+de uma posição dada. Fica mais sensato "esconder" do usuário o processo
+de trabalho com os nós.
 
