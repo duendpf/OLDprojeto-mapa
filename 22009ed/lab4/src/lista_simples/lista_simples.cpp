@@ -96,11 +96,19 @@ Nodo *ListaSimples::Inserir_frente(Elem x) {
 }
 
 Elem *ListaSimples::Remover_frente() {
+	if(head == NULL)
+		return(NULL);
+
 	Elem *x = new Elem();
 	Nodo *pa = head;
+	if(head == tail) {
+		*x = pa->getElem();
+		delete pa;
+		head = tail = NULL;
+		nelem--;
+		return(x);
+	}
 	head = pa->getNext();
-	if (head == NULL)
-		tail = NULL;
 	*x = pa->getElem();
 	delete pa;
 	nelem--;
@@ -111,7 +119,7 @@ Nodo *ListaSimples::Inserir_final(Elem x) {
 	if (head == NULL) {
 		Nodo *Pa = new NodoSimples();
 		Pa->setElem(x);
-		head = Pa;
+		head = tail = Pa;
 		nelem++;
 		return(Pa);
 	}
@@ -119,26 +127,30 @@ Nodo *ListaSimples::Inserir_final(Elem x) {
 }
 
 Elem *ListaSimples::Remover_final() {
+	if(head == NULL)
+		return(NULL);
+
 	Elem *x = new Elem();
 	Nodo *Pa;
 	Pa = head;
-	if ((head)->getNext() == NULL) {
+	if (head->getNext() == NULL) {
 		/* Lista com 1 elemento */
 		tail = NULL;
 		head = NULL;
-	} else {
-		while (Pa->getNext() != tail) Pa = Pa->getNext();
-		tail = Pa;
-		Pa = Pa->getNext();
-		(tail)->setNext(NULL);
-	}
-		*x = Pa->getElem();
-		delete Pa;
 		nelem--;
-		return x;
+	} else {
+		while(Pa->getNext() != tail) Pa = Pa->getNext();
+		Pa = Remover_apos(Pa);
+	}
+	*x = Pa->getElem();
+	delete Pa;
+	return x;
 }
 /* inserir x apos *p */
 Nodo *ListaSimples::Inserir_apos(Nodo *p, Elem x) {
+	if(p == NULL) 
+		return(NULL);
+
 	Nodo *Pa = new NodoSimples();
 	Pa->setElem(x);
 	if(p == tail) {
@@ -197,11 +209,13 @@ bool ListaSimples::Inserir(int x, Elem e) {
 	if(x == 1) {
 		Inserir_frente(e);
 		return(true);
-	}
+	} /*else if(x >  2 && head == tail)
+		return(false);*/
+
 	/* posso inserir em 1 mesmo que a lista tenha mais de 1 elem. */
 	int i = 1;
 	Nodo *tmp = head;
-	for(i; i <= x-1; i++) {
+	for(i; i < x-1; i++) {
 		tmp = tmp->getNext();
 	}
 	if(Inserir_apos(tmp, e))
@@ -229,7 +243,7 @@ Elem *ListaSimples::Retornar(int x) {
 
 	int i = 1;
 	Nodo *tmp = head;
-	for(i; i <= x-1; i++)
+	for(i; i < x-1; i++)
 		tmp = tmp->getNext();
 
 	Elem *te = new Elem((tmp->getElem()).getChave(), (tmp->getElem()).getInfo());

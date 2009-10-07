@@ -166,14 +166,16 @@ main(int argc, char *argv[]) {
 	gettimeofday(&start, NULL);
 	for(i; i < 10000; i++) {
 		tmpel.setChave(i+1);
-		if(((k = l->Tamanho()) != 0) && ((k % 2) == 0)) {
+		printf("A chave: %d\n", tmpel.getChave());
+/*		if(((k = l->Tamanho()) != 0) && ((k % 2) == 0)) {
 			if(!(l->Inserir((k/2), tmpel)))
 				printf("fuck... nao inseriu na pos. %d\n", (k/2));
 		} else {
 			if(!(l->Inserir(i+1, tmpel)))
-				printf("fuck... nao inseriu na pos. %d\n", (k/2));
+				printf("fuck... nao inseriu na pos. %d\n", i+1);
 		}
-
+*/
+		l->Inserir(i+1, tmpel);
 	}
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &elap);
@@ -267,8 +269,8 @@ main(int argc, char *argv[]) {
 			l->Remover(k/2);
 		else
 */
-		if(l->Remover(i+1) == NULL)
-			printf("Nao removeu %d\n", i+1);
+//		if(l->Remover(i+1) == NULL)
+//			printf("Nao removeu %d\n", i+1);
 	}
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &elap);
