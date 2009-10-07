@@ -85,7 +85,8 @@ main(int argc, char *argv[]) {
 	 */
 	gettimeofday(&start, NULL);
 	for(i; i < 10000; i++) {
-		l->Remover_frente();
+		Elem *el = l->Remover_frente();
+		delete el;
 	}
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &elap);
@@ -121,7 +122,8 @@ main(int argc, char *argv[]) {
 	 */
 	gettimeofday(&start, NULL);
 	for(i; i < 10000; i++) {
-		l->Remover_final();
+		Elem *el = l->Remover_final();
+		delete el;
 	}
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &elap);

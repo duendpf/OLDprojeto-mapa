@@ -108,14 +108,14 @@ Elem *ListaSimples::Remover_frente() {
 }
 
 Nodo *ListaSimples::Inserir_final(Elem x) {
-	Nodo *Pa = new NodoSimples();
-	Pa->setElem(x);
-	Pa->setNext(NULL);
-	if (head == NULL) head = Pa;
-	else (tail)->setNext(Pa);
-	tail = Pa;
-	nelem++;
-	return Pa;
+	if (head == NULL) {
+		Nodo *Pa = new NodoSimples();
+		Pa->setElem(x);
+		head = Pa;
+		nelem++;
+		return(Pa);
+	}
+	return(Inserir_apos(tail, x));
 }
 
 Elem *ListaSimples::Remover_final() {
@@ -150,7 +150,8 @@ Nodo *ListaSimples::Inserir_apos(Nodo *p, Elem x) {
 	}
 
 	/* se p == head, nao importa! inserir-se-a apos!!! */
-	Pa->setNext(p->getNext());
+	Nodo *tmp = p->getNext();
+	Pa->setNext(tmp);
 	p->setNext(Pa);
 	nelem++;
 	return Pa;
@@ -174,9 +175,12 @@ Nodo *ListaSimples::Remover_apos(Nodo *p) {
 
 void ListaSimples::Imprimir() {
 	Nodo *Pa = head;
+	int i = 1;
 	while(Pa != NULL) {
+		printf("pos. %d: ", i);
 		Pa->Imprimir();
 		Pa = Pa->getNext();
+		i++;
 	}
 }
 
@@ -186,40 +190,22 @@ int ListaSimples::Tamanho() {
 
 bool ListaSimples::Inserir(int x, Elem e) {
 	Nodo *Pa;
-
-	if(x == 1 && head == NULL) {
-		Pa = new NodoSimples(e, NULL);
-		head = tail = Pa;
-		nelem++;
-		return(true);
-	} else if(x == 1 && head == tail) {
-		Pa = new NodoSimples(e, head);
-		tail = head;
-		head = Pa;
-		nelem++;
-		return(true);
-	} else if(x == 1 && head != tail) {
-		Pa = new NodoSimples(e, head);
-		head = Pa;
-		nelem++;
-		return(true);
-	}
 	/* so insere apos o tamanho atual se for exatamente um apos nelem */
 	if(x < 1 || x > (nelem+1))
 		return(false);
+
+	if(x == 1) {
+		Inserir_frente(e);
+		return(true);
+	}
 	/* posso inserir em 1 mesmo que a lista tenha mais de 1 elem. */
 	int i = 1;
 	Nodo *tmp = head;
-	for(i; i <= x; i++) {
-		if(i == (x - 1)) {
-			/* insere antes do elemento do qual tomora a posicao */
-				Pa = new NodoSimples(e, tmp->getNext());
-				tmp->setNext(Pa);
-				nelem++;
-				return(true);
-		}
+	for(i; i <= x-1; i++) {
 		tmp = tmp->getNext();
 	}
+	if(Inserir_apos(tmp, e))
+		return(true);
 
 	return(false);
 
@@ -243,11 +229,8 @@ Elem *ListaSimples::Retornar(int x) {
 
 	int i = 1;
 	Nodo *tmp = head;
-	for(i; i < x; i++)
+	for(i; i <= x-1; i++)
 		tmp = tmp->getNext();
-
-	if(i > x)
-		return(NULL);
 
 	Elem *te = new Elem((tmp->getElem()).getChave(), (tmp->getElem()).getInfo());
 	delete tmp;
@@ -273,9 +256,8 @@ Elem *ListaSimples::Remover(int x) {
 /* este loop falha para x = nelem, por isso testado antes */
 	for(i; i < x; i++) {
 		if(i == x-1) {
-			Pa = tmp->getNext();
+			Pa = Remover_apos(tmp);
 			Elem *e = new Elem(Pa->getElem().getChave(), Pa->getElem().getInfo());
-			tmp->setNext(Pa->getNext());
 			delete Pa;
 			return(e);
 		}
