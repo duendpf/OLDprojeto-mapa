@@ -164,23 +164,20 @@ main(int argc, char *argv[]) {
 	gettimeofday(&start, NULL);
 	for(i; i < 10000; i++) {
 		tmpel.setChave(i+1);
-/*		if(((k = l->Tamanho()) != 0) && ((k % 2) == 0)) {
+		if(((k = l->Tamanho()) != 0) && ((k % 2) == 0)) {
 			if(!(l->Inserir((k/2), tmpel)))
 				printf("fuck... nao inseriu na pos. %d\n", (k/2));
 		} else {
 			if(!(l->Inserir(i+1, tmpel)))
 				printf("fuck... nao inseriu na pos. %d\n", (k/2));
 		}
-*/
-		l->Inserir(i+1, tmpel);
 
-		printf("i = %d\n", i);
 	}
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &elap);
 	ls_bench[j++] = (double) (elap.tv_sec + ((elap.tv_usec)/1000000.0));
 	printf("\n%f\n", ls_bench[j-1]);
-	l->Imprimir();
+	//l->Imprimir();
 	printf("Tamanho %d\n", l->Tamanho());
 
 	i = 0;
@@ -211,8 +208,8 @@ main(int argc, char *argv[]) {
 	timersub(&end, &start, &elap);
 	ls_bench[j++] = (double) (elap.tv_sec + ((elap.tv_usec)/1000000.0));
 	printf("\n%f\n", ls_bench[j-1]);
-	//l->Imprimir();
 	printf("Tamanho %d\n", l->Tamanho());
+	l->Imprimir();
 
 	i = 0;
 	/*
@@ -228,7 +225,8 @@ main(int argc, char *argv[]) {
 		if((x = l->Retornar(ret_pos[i])) == NULL)
 			printf("I caraio .... ret_pos[%d] = %d\n", i, ret_pos[i]);
 		else {
-			printf("Elem pos. %d retornado\n", ret_pos[i]);
+			printf("Elem pos. %d retornado - i = %d\n", ret_pos[i], i);
+			printf("\tchave: %d; info: %s\n", x->getChave(), x->getInfo());
 			delete x;
 		}
 			
@@ -263,7 +261,12 @@ main(int argc, char *argv[]) {
 	 */
 	gettimeofday(&start, NULL);
 	for(i; i < 10000; i++) {
-		l->Remover(((i+1)/2));
+/*		if(((k = l->Tamanho()) != 0) && ((k % 2) == 0))
+			l->Remover(k/2);
+		else
+*/
+		if(l->Remover(i+1) == NULL)
+			printf("Nao removeu %d\n", i+1);
 	}
 	gettimeofday(&end, NULL);
 	timersub(&end, &start, &elap);

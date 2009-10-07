@@ -27,22 +27,22 @@ ALL:
 	@echo "do nothing"
 
 ${OBJ_BASE}: ${SRC_BASE} ${H_BASE}
-	g++ -c ${SRC_BASE}
+	g++ -g -c ${SRC_BASE}
 
 ${OBJ_LS}: ${SRC_LS} ${H_LS}
-	g++ -c ${SRC_LS}
+	g++ -g -c ${SRC_LS}
 
 ${LS}: ${OBJ_BASE} ${OBJ_LS} main_${LS}.cpp
-	g++ -o ${LS} ${OBJ_BASE} ${OBJ_LS} main_${LS}.cpp
+	g++ -g -o ${LS} ${OBJ_BASE} ${OBJ_LS} main_${LS}.cpp
 
 ${OBJ_LD}: ${SRC_LD} ${H_LD}
-	g++ -c ${SRC_LD}
+	g++ -g -c ${SRC_LD}
 
 ${LD}: ${OBJ_BASE} ${OBJ_LD} main_${LD}.cpp
-	g++ -o ${LD} ${OBJ_BASE} ${OBJ_LD} main_${LD}.cpp
+	g++ -g -o ${LD} ${OBJ_BASE} ${OBJ_LD} main_${LD}.cpp
 
 ${BENCH}: ${OBJ_BASE} ${OBJ_LS} ${OBJ_LD} main_${BENCH}.cpp
-	g++ -o ${BENCH} ${OBJ_BASE} ${OBJ_LS} ${OBJ_LD} main_${BENCH}.cpp
+	g++ -g -o ${BENCH} ${OBJ_BASE} ${OBJ_LS} ${OBJ_LD} main_${BENCH}.cpp
 
 clean:
 	rm *.o ${BENCH} ${LS} ${LD}

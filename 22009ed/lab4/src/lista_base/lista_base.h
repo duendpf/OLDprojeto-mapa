@@ -44,6 +44,7 @@ class ListaSimples : public Lista {
 	public:
 	
 	ListaSimples();
+	~ListaSimples();
 
 	Nodo *Inserir_frente(Elem);
 	Elem *Remover_frente();
@@ -70,6 +71,7 @@ class ListaDupla : public Lista {
 	public:
 	
 	ListaDupla();
+	~ListaDupla();
 
 	Nodo *Inserir_frente(Elem);
 	Elem *Remover_frente();

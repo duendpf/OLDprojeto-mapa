@@ -12,6 +12,7 @@ class NodoSimples : public Nodo {
 
 	NodoSimples();
 	NodoSimples(Elem&, Nodo*);
+	~NodoSimples();
 
 	Nodo *getNext();
 	Elem getElem();
@@ -33,13 +34,21 @@ class NodoSimples : public Nodo {
 NodoSimples::NodoSimples() {
 	next = NULL;
 	elem.setChave(0);
-	elem.setInfo("\0");
+	char str[3];
+	strcpy(str, "\0");
+	elem.setInfo(str);
 }
 
 NodoSimples::NodoSimples(Elem &e, Nodo *n = NULL) {
 	elem = e;
 	next = n;
 }
+
+NodoSimples::~NodoSimples() {
+	next = NULL;
+	/* redundante fazer isso, pois o compilador já elemina tudo isso */
+}
+
 
 Nodo *NodoSimples::getNext() {
 	return(next);
@@ -66,6 +75,13 @@ ListaSimples::ListaSimples() {
 	head = NULL;
 	tail = NULL;
 }
+
+ListaSimples::~ListaSimples() {
+	while(nelem != 0) {
+		Remover_frente();
+	}
+}
+			
 
 Nodo *ListaSimples::Inserir_frente(Elem x) {
 	Nodo *pa;
@@ -182,6 +198,11 @@ bool ListaSimples::Inserir(int x, Elem e) {
 		head = Pa;
 		nelem++;
 		return(true);
+	} else if(x == 1 && head != tail) {
+		Pa = new NodoSimples(e, head);
+		head = Pa;
+		nelem++;
+		return(true);
 	}
 	/* so insere apos o tamanho atual se for exatamente um apos nelem */
 	if(x < 1 || x > (nelem+1))
@@ -199,6 +220,8 @@ bool ListaSimples::Inserir(int x, Elem e) {
 		}
 		tmp = tmp->getNext();
 	}
+
+	return(false);
 
 }
 
@@ -220,12 +243,14 @@ Elem *ListaSimples::Retornar(int x) {
 
 	int i = 1;
 	Nodo *tmp = head;
-	for(i; i != x; i++)
+	for(i; i < x; i++)
 		tmp = tmp->getNext();
+
 	if(i > x)
 		return(NULL);
 
-	Elem *te = new Elem(tmp->getElem().getChave(), tmp->getElem().getInfo());
+	Elem *te = new Elem((tmp->getElem()).getChave(), (tmp->getElem()).getInfo());
+	delete tmp;
 	return(te);
 }
 

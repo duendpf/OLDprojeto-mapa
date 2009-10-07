@@ -88,3 +88,11 @@ na ListaSimples nem na ListaDupla, preferi criar uma função que remova
 de uma posição dada. Fica mais sensato "esconder" do usuário o processo
 de trabalho com os nós.
 
+Bom, a parte do benchmark me parecia suficientemente simples para eu me
+preocupar com outros afazeres. Meus testes com 20 elementos - ou próximo
+disso - funcionaram a contento. Mas justo no benchmark a lista simples
+falhou. Tentei verificar o que havia de errado. Suspeito que seja com a
+função Inserir(). Faltam 35min para a entrega. Caso este documento
+termine aqui, significa que não consegui implementar a tempo de entregar
+funcional.
+
