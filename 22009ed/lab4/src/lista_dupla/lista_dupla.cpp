@@ -34,7 +34,9 @@ NodoDuplo::NodoDuplo() {
 	next = NULL;
 	prev = NULL;
 	elem.setChave(0);
-	elem.setInfo("\0");
+	char str[3];
+	strcpy(str, "\0");
+	elem.setInfo(str);
 }
 
 NodoDuplo::NodoDuplo(Elem &e, Nodo *p = NULL, Nodo *n = NULL) {
@@ -77,6 +79,12 @@ ListaDupla::ListaDupla() {
 	tail = NULL;
 }
 
+ListaDupla::~ListaDupla() {
+	while(nelem != 0) {
+		Remover_frente();
+	}
+}
+
 Nodo *ListaDupla::Inserir_frente(Elem x) {
 	Nodo *Pa;
 	Pa = new NodoDuplo();
@@ -86,6 +94,8 @@ Nodo *ListaDupla::Inserir_frente(Elem x) {
 	head = Pa;
 	if(tail == NULL) 
 		tail = head;
+	else 
+		(head->getNext())->setPrev(Pa);
 	nelem++;
 	return Pa;
 }
@@ -96,8 +106,9 @@ Elem *ListaDupla::Remover_frente() {
 	head = Pa->getNext();
 	if (head == NULL)
 		tail = NULL;
+	else
+		head->setPrev(NULL);
 	/* se nao esvaziar a lista, head->prev = NULL */
-	head->setPrev(NULL);
 	*x = Pa->getElem();
 	delete Pa;
 	nelem--;
@@ -192,41 +203,38 @@ int ListaDupla::Tamanho() {
 bool ListaDupla::Inserir(int x, Elem e) {
 	/* na minha lista, só pode inserir em posicoes ja existentes na lista,
 	 * ou seja, passou de nelem nao insere */
-	if(x < 1 || x > nelem) 
+	if(x < 1 || x > (nelem+1)) 
 		return(false);
-	
-	Nodo *Pa;
 
-	if(head == NULL) {
-		Pa = new NodoDuplo(e, NULL, NULL);
-		head = tail = Pa;
-		nelem++;
+	if(x == 1) {
+		Inserir_frente(e);
 		return(true);
 	}
 	/* posso querer inserir na 1a pos. mesmo se tail != head */
 	if(head == tail || x == 1) {
+		Nodo *Pa = new NodoDuplo(e);
 		Pa = new NodoDuplo(e, NULL, head);
 		head = Pa;
 		nelem++;
 		return(true);
 	}
 
-	/* chega aqui com x >= 2 */
-	Pa = new NodoDuplo(e);
 	Nodo *tmp = head;
 	int i = 1;
-	for(i; i <= nelem; i++) {
-		if(i == x-1) {
-			/* contempla o caso de ser pos x == pos tail */
-			Pa->setPrev(tmp);
-			Pa->setNext(tmp->getNext());
-			tmp->setNext(Pa);
-			Pa->getNext()->setPrev(Pa);
-			nelem++;
-			return(true);
-		}
+	for(i; i < x-1; i++) {
 		tmp = tmp->getNext();
 	}
+
+/*
+	Nodo *Pa = new NodoDuplo(e);
+	Pa->setPrev(tmp);
+	Pa->setNext(tmp->getNext());
+	tmp->setNext(Pa);
+	Pa->getNext()->setPrev(Pa);
+	nelem++;
+*/
+	if(Inserir_apos(tmp, e))
+		return(true);
 
 	/* se chegar aqui ... epa!!! erro hein!!! */
 	return(false);
@@ -276,17 +284,13 @@ Elem *ListaDupla::Remover(int x) {
 	int i = 1;
 	Nodo *tmp = head, *Pa;
 /* este loop falha para x = nelem, por isso testado antes */
-	for(i; i < x; i++) {
-		if(i == x-1) {
-			Pa = tmp->getNext();
-			Elem *e = new Elem(Pa->getElem().getChave(), Pa->getElem().getInfo());
-			tmp->setNext(Pa->getNext());
-			tmp->getNext()->setPrev(tmp);
-			delete Pa;
-			return(e);
-		}
-
+	for(i; i < x-1; i++) {
 		tmp = tmp->getNext();
+	}
+	if(Pa = Remover_apos(tmp)) {
+		Elem *e = new Elem(Pa->getElem().getChave(), Pa->getElem().getInfo());
+		delete Pa;
+		return(e);
 	}
 
 	return(NULL);

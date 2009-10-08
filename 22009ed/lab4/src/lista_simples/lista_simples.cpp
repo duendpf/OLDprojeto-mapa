@@ -171,6 +171,9 @@ Nodo *ListaSimples::Inserir_apos(Nodo *p, Elem x) {
 
 
 Nodo *ListaSimples::Remover_apos(Nodo *p) {
+	if(p == NULL)
+		return(NULL);
+
 	Nodo *Pa = p->getNext();
 	if(p == tail)
 		return NULL;
@@ -247,7 +250,6 @@ Elem *ListaSimples::Retornar(int x) {
 		tmp = tmp->getNext();
 
 	Elem *te = new Elem((tmp->getElem()).getChave(), (tmp->getElem()).getInfo());
-	delete tmp;
 	return(te);
 }
 
@@ -267,16 +269,13 @@ Elem *ListaSimples::Remover(int x) {
 
 	int i = 1;
 	Nodo *tmp = head, *Pa;
-/* este loop falha para x = nelem, por isso testado antes */
-	for(i; i < x; i++) {
-		if(i == x-1) {
-			Pa = Remover_apos(tmp);
-			Elem *e = new Elem(Pa->getElem().getChave(), Pa->getElem().getInfo());
-			delete Pa;
-			return(e);
-		}
-
+	for(i; i < x-1; i++) {
 		tmp = tmp->getNext();
+	}
+	if(Pa = Remover_apos(tmp)) {
+		Elem *e = new Elem(Pa->getElem().getChave(), Pa->getElem().getInfo());
+		delete Pa;
+		return(e);
 	}
 
 	return(NULL);
