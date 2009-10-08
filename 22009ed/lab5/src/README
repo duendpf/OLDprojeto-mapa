@@ -1,0 +1,12 @@
+Para compilar o programa de teste:
+
+make mpilha
+
+Para recompilar:
+
+make clean && make mpilha
+
+Desenvolvido com a intenção de rodar em sistemas unix-like ou em
+ambientes que façam juz a tais sistemas dentro do Microsoft Windows.
+
+
