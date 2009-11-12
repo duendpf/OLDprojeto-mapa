@@ -1,0 +1,72 @@
+# $Id$
+#
+# Makefile para gerenciamento do projeto de labrotario 6
+# pilhas
+
+# a base da lista
+LBPATH = lista_base
+SRC_LB = lista_base/*.cpp
+H_LB = lista_base/*.h
+
+# base of elements
+EBPATH = elem_base
+SRC_EB = ${EBPATH}/*.cpp
+H_EB = ${EBPATH}/*.h
+
+# lista simples
+LSPATH = lista_simples
+SRC_LS = ${SRC_LB} lista_simples/*.cpp
+H_LS = ${H_LB} lista_simples/*.h
+OBJ_LS = lista_simples.o # e se fossem mil arquivos .cpp a virarem .o?!
+
+ESPATH = elem_simples
+SRC_ES = ${SRC_EB} ${ESPATH}/*.cpp
+H_ES = ${ESPATH}/*.h
+OBJ_ES = elem_simples.o
+
+# pilha
+FPATH = fila
+SRC_FILA = ${FPATH}/*.cpp
+H_FILA = ${FPATH}/*.h
+OBJ_FILA = fila.o
+
+# o progama em si
+FILA = mfila
+
+# pilha
+FPPATH = filap
+SRC_FILAP = filap/*.cpp
+H_FILAP = filap/*.h
+OBJ_FILAP = filap.o
+
+# o progama em si
+FILAP = mfilap
+
+ALL: 
+	@echo "do nothing"
+
+#CLFAGS: includedirs
+CFLAGS += -I${LBPATH} -I${LSPATH} -I${FPATH} -I${FPPATH} -I${EBPATH} -I${ESPATH}
+
+${OBJ_LB}: ${SRC_LB} ${H_LB}
+	g++ ${CFLAGS} -g -c ${SRC_LB}
+
+${OBJ_LS}: ${SRC_LS} ${H_LS} ${SRC_ES}
+	g++ ${CFLAGS} -g -c ${SRC_LS}
+
+${OBJ_ES}: ${SRC_EB} ${H_EB} 
+${OBJ_FILA}: ${SRC_FILA} ${H_FILA} ${SRC_ES}
+	g++ ${CFLAGS} -g -c ${SRC_FILA} 
+
+${FILA}: ${OBJ_LB} ${OBJ_LS} ${OBJ_FILA} main_${FILA}.cpp
+	g++ ${CFLAGS} -g -o ${FILA} ${OBJ_LS} ${OBJ_FILA} main_${FILA}.cpp
+
+${OBJ_FILAP}: ${SRC_FILAPP} ${H_FILAPP}
+	g++ ${CFLAGS} -g -c ${SRC_FILAP}
+
+${FILAP}: ${OBJ_LB} ${OBJ_LS} ${OBJ_FILAP} main_${FILAP}.cpp
+	g++ ${CFLAGS} -g -o ${FILAP} ${OBJ_LS} ${OBJ_FILAP} main_${FILAP}.cpp
+
+
+clean:
+	rm *.o ${FILAP} ${FILA}

@@ -1,0 +1,38 @@
+Trabalho elaborado por
+
+Raimundo de Araujo Pereira Santos,
+no. usp 678345-7
+
+Implementação de Árvore Binária
+
+Implementação de uma árvore binária comum, nem de busca, nem própria ou
+estrita.
+
+Funções a serem implementadas:
+
+int size(Tree* T);
+bool isEmpty(Tree* T);
+node* root(Tree* T);
+node* parent(node* c);
+bool isInternal(node* c);
+bool isExternal(node* c);
+bool isRoot(node* c);
+node* leftChild(Tree* T, node* c);
+node* rightChild(Tree* T, node* c);
+node* sibiling(Tree* T, node* c);
+void swap(Tree* T, node* c, node* d);
+void replace(Tree* T, node* c, tipo_elem e);
+node* remove(Tree* T, node* c);
+node* insertLeft(Tree* T, node* parent, tipo_elem ele);
+node* insertRight(Tree* T, node* parent, tipo_elem ele);
+node* search(Tree* T, node* c, tipo_elem c);
+node* expandExternal(Tree* T, node* v);
+node* removeAboveExternal(Tree* T, node* v);
+
+Pela primeira vez, usando efetivamente templates em C++. Tanto para a
+classe BTNode (Binary Tree Node) quanto paara a classe BinTree em si,
+pois posso colocar o tipo de elemento que eu quiser, desde que algumas
+operações estejam definidas: as de comparação e a de atribuição ( <, >,
+<=, >=, ==, != e =).
+
+

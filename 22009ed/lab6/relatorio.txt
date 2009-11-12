@@ -1,0 +1,29 @@
+Trabalho elaborador por
+
+Raimundo A. P. Santos
+No. USP 678345-7
+
+Implementação da especificação de uma fila normal e fila de prioridade.
+
+Para a fila normal, sem prioridade, implementarei através de uma lista
+ligada simples, a mesma implementada dois laboratórios atrás.
+
+Farei também uma classe abstrata para implementar o elemento com o qual
+se trabalha. Essa classe tornará possível ter qualquer tipo de elemento
+dentro das estruturas de dados que a utilizarem.
+
+Essa mudança não necessariamente exige uma mudança na implementação das
+listas.
+
+Essa mudança exigiu uma grande mudança no Makefile, por consequncia me
+fez fazer um tracking absurdo de dependências. Mas o Make dos BSD,
+normalmente, oferecem o ".include <bsd.prog.mk>" que toma todas as
+providências para que o programa seja gerado.
+
+Resolvi testar isso. Como meu intuito de forma alguma é entregar um
+projeto que não funcione, espero que fique claro isso. Para tanto, devo
+fazer o README e forçar a pessoa que vai corrigir a ler o README. Espero
+muito que ela tenha a senha do root ou tenha acesso fácil a comunicação
+com o admin da máquina pra instalar o pmake no linux.
+
+
