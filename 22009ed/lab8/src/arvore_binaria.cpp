@@ -4,15 +4,16 @@
 
 #include "arvore_binaria.h"
 
-
-BTNode::BTNode() {
+template <class T>
+BTNode<T>::BTNode() {
 	lchild = NULL;
 	lchild = NULL;
 	parent = NULL;
 }
 
 // parent
-BTNode::BTNode(BTNode* p) {
+template <class T>
+BTNode<T>::BTNode(BTNode<T>* p) {
 	lchild = NULL;
 	rchild = NULL;
 	parent = p;
@@ -20,15 +21,16 @@ BTNode::BTNode(BTNode* p) {
 
 // parent, element
 template <class T>
-BTNode::BTNode(BTNode* p, T& e) {
+BTNode<T>::BTNode(BTNode<T>* p, T& e) {
 	lchild 	= NULL;
 	rchild 	= NULL;
 	parent 	= p;
-	elem	= t;
+	elem	= e;
 }
 
 // parent, left, right
-BTNode::BTNode(BTNode* p, BTNode* l, BTNode* r) {
+template <class T>
+BTNode<T>::BTNode(BTNode<T>* p, BTNode<T>* l, BTNode<T>* r) {
 	lchild	= l;
 	rchild	= r;
 	parent	= p;
@@ -36,77 +38,254 @@ BTNode::BTNode(BTNode* p, BTNode* l, BTNode* r) {
 
 // parent, left, right, element
 template <class T>
-BTNode::BTNode(BTNode* p, BTNode* l, BTNode* r, T& e) {
+BTNode<T>::BTNode(BTNode<T>* p, BTNode<T>* l, BTNode<T>* r, T& e) {
 	lchild	= l;
 	rchild	= r;
 	parent	= p;
 	elem	= e;
 }
 
+template <class T>
 bool
-BTNode::setParent(BTNode* p) {
+BTNode<T>::setParent(BTNode<T>* p) {
 	parent	= p;
 }
 
-BTNode*
-BTNode::getParent() const { return parent; }
+template <class T>
+BTNode<T>*
+BTNode<T>::getParent() const { return(parent); }
 
+template <class T>
 bool
-BTNode::setRight(BTNode* r) {
+BTNode<T>::setRight(BTNode<T>* r) {
 	rchild	= r;
 }
 
-BTNode*
-BTNode::getRight() const { return rchild; }
+template <class T>
+BTNode<T>*
+BTNode<T>::getRight() const { return(rchild); }
 
+template <class T>
 bool
-BTNode::setLeft(BTNode* l) {
+BTNode<T>::setLeft(BTNode<T>* l) {
 	lchild	= l;
 }
 
-BTNode*
-BTNode::getLeft() const { return lchild; }
+template <class T>
+BTNode<T>*
+BTNode<T>::getLeft() const { return(lchild); }
 
 
+template <class T>
 bool
-BTNode::setElem(T& e) {
+BTNode<T>::setElem(T& e) {
 	elem = e;
 }
 
+template <class T>
 T
-BTNode::getElem() const { return elem; }
+BTNode<T>::getElem() const { return(elem); }
 
 
-BinTree::BinTree() {
-	size	= 0;
-	root	= NULL;
+template <class T>
+BinTree<T>::BinTree() {
+	tsize	= 0;
+	troot	= NULL;
 }
 
+template <class T>
+BinTree<T>::BinTree(BTNode<T>* r) {
+	tsize	= 1;
+	troot	= r;
+}
+
+template <class T>
 int
-BinTree::size() const {
-	
-		bool 	isEmpty() const;
-		BTNode* root();
-		BTNode* parent(BTNode*);
-		bool 	isInternal(BTNode*);
-		bool 	isExternal(BTNode*);
-		bool 	isRoot(BTNode*);
-		BTNode* leftChild(BTNode*);
-		BTNode* rightChild(BTNode*);
-		BTNode* sibiling(BTNode*);
-		void 	swap(BTNode*, BTNode*);
-		void 	replace(BTNode*, T&);
-		BTNode* remove(BTNode*);
-		BTNode* insertLeft(BTNode*, T&);
-		BTNode* insertRight(BTNode*, T&);
-		BTNode* search(BTNode*, T&);
-		BTNode* expandExternal(BTNode*);
-		BTNode* removeAboveExternal(BTNode*);
+BinTree<T>::size() const { return(tsize); }
 
-	private:
+template <class T>
+int
+BinTree<T>::size(BTNode<T>* stroot) const {
+	if(troot == NULL)
+		return(0);
+	else {
+		// the count of the root node in question
+		int count = 1;
 
-		int	size;
-		BTNode*	root;
-};
+		// descend into left subtree
+		count += size(stroot->getLeft());
+		// descend into right subtee
+		count += size(stroot->getright());
 
-#endif
+		return(count);
+	}
+}
+
+
+template <class T>
+bool
+BinTree<T>::isEmpty() const { return(troot == NULL); }
+
+template <class T>
+BTNode<T>*
+BinTree<T>::root() { return(troot); }
+
+template <class T>
+BTNode<T>*
+BinTree<T>::parent(BTNode<T>* node) { return(node->getParent()); }
+
+template <class T>
+bool
+BinTree<T>::isInternal(BTNode<T>* node) { return(node->getLeft() != NULL && node->getRight() != NULL); }
+
+template <class T>
+bool
+BinTree<T>::isExternal(BTNode<T>* node) { return(node->getLeft() == NULL && node->getRight() == NULL); }
+
+template <class T>
+bool
+BinTree<T>::isRoot(BTNode<T>* node) { return(node->getParent() == NULL); }
+
+template <class T>
+BTNode<T>*
+BinTree<T>::leftChild(BTNode<T>* node) { return(node->getLeft()); }
+
+template <class T>
+BTNode<T>*
+BinTree<T>::rightChild(BTNode<T>* node) { return(node->getRight()); }
+
+template <class T>
+BTNode<T>*
+BinTree<T>::sibiling(BTNode<T>* node) {
+	if(node == node->getParent()->getLeft())
+		return node->getParent()->getRight();
+	else
+		return node->getParent()->getLeft();
+}
+
+template <class T>
+void
+BinTree<T>::swap(BTNode<T>* n1, BTNode<T>* n2) {
+	BTNode<T> tmp;
+	tmp.setParent(n1->getParent());
+	tmp.setLeft(n1->getLeft());
+	tmp.setRight(n1->getRight());
+	tmp.setElem(n1->getElem());
+
+	n1->setParent(n2->getParent());
+	n1->setLeft(n2->getLeft());
+	n1->setRight(n2->getRight());
+	n1->setElem(n2->getElem());
+
+	n2->setParent(tmp.getParent());
+	n2->setLeft(tmp.getLeft());
+	n2->setRight(tmp.getRight());
+	n2->setElem(tmp.getElem());
+}
+
+template <class T>
+void
+BinTree<T>::replace(BTNode<T>* node, T& e) {
+	node->setElem(e);
+}
+
+template <class T>
+BTNode<T>*
+BinTree<T>::remove(BTNode<T>* node) {
+	if(isExternal(node)) {
+		if(node->getParent()->getLeft() == node)
+			node->getParent()->setLeft(NULL);
+		else
+			node->getParent()->setRight(NULL);
+		
+		return(node);
+	} else {
+		remove(node->getLeft());
+		remove(node->getRight());
+		return(node);
+	}
+}
+
+template <class T>
+BTNode<T>*
+BinTree<T>::insertLeft(BTNode<T>* node, T& e) {
+	if(node->getLeft() == NULL) {
+		BTNode<T>* n = new BTNode<T>(node, e);
+		node->setLeft(n);
+		return(n);
+	} else {
+		BTNode<T> *n = new BTNode<T>(node, node->getLeft(), NULL, e);
+		node->setLeft(n);
+		n->getLeft()->setParent(n);
+		return(n);
+	}
+}
+
+template <class T>
+BTNode<T>*
+BinTree<T>::insertRight(BTNode<T>* node, T& e) {
+	if(node->getRight() == NULL) {
+		BTNode<T> *n = new BTNode<T>(node, e);
+		node->setRight(n);
+		return(n);
+	} else {
+		BTNode<T> *n = new BTNode<T>(node, NULL, node->getRight(), e);
+		node->setRight(n);
+		n->getRight()->setParent(n);
+		return(n);
+	}
+}
+
+template <class T>
+BTNode<T>*
+BinTree<T>::search(BTNode<T>* node, T& e) {
+	// test here if the is null 
+	// if it is, say goodbye!
+	if(node == NULL || node->getElem() == e) {
+		return(node);
+	} else {
+		search(node->getLeft());
+		search(node->getRight());
+	}
+}
+
+template <class T>
+BTNode<T>*
+BinTree<T>::expandExternal(BTNode<T>* node) {
+	if(isInternal(node)) {
+		return(NULL);
+	} else {
+		BTNode<T> *nleft = new BTNode<T>(node);
+		BTNode<T> *nright = new BTNode<T>(node);
+
+		node->setLeft(nleft);
+		node->setRight(nright);
+
+		return(node);
+	}
+}
+
+// this func. send to deep space the left and the parent of the passed node, as
+// it turns to a leaf in the place of his parent
+template <class T>
+BTNode<T>*
+BinTree<T>::removeAboveExternal(BTNode<T>* node) {
+	if(isExternal(node)) {
+		return(NULL);
+	} else {
+		if(sibiling(node) != NULL)
+			delete sibiling(node);
+
+		BTNode<T> *nparent = node->getParent()->getParent();
+		if(node->getParent() == nparent->getLeft()) {
+			nparent->setLeft(node);
+		} else {
+			nparent->setRight(node);
+		}
+
+		delete node->getParent();
+		node->setParent(nparent);
+		return(node);
+	}
+}
+

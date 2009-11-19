@@ -35,4 +35,29 @@ pois posso colocar o tipo de elemento que eu quiser, desde que algumas
 operações estejam definidas: as de comparação e a de atribuição ( <, >,
 <=, >=, ==, != e =).
 
+size(): duas formas de fazer isso. A primeira é a cada nó inserido ou
+removido, adicionar ou subtrair uma unidade de 'size', respectivamente.
+A segunda é uma forma recursiva: toda vez que a função é chamada, ela
+percorre toda a árvore, contando os nós. A primeira é mais rápida, pois
+o valor sempre estará ali, a postos, para consulta, a seungda é mais
+segura, pois sempre conta a quantidade de nós. Como quem controla a
+insersação é a remoção, em C++, é a classe BinTree, então posso
+assegurar, com a primeira forma, que sempre será correto o valor em
+'size'. Se a implementação que eu escolhi fosse C, preferiria o método
+recursivo, já que, por algum erro, alguma função pode alterar o valor em
+'size'. Resolvi implementar os dois métodos, diferenciando-os pelo
+argumento: a primeira forma não recebe argumentos, a segunda
+obrigatoriamente recebe o nó-raiz da árvore em questão.
+
+O tipo_elem, aqui representado pela classe Elem, tem os operadores de
+comparação, os relacionais. Mas eles agem conforme a chave numérica, por
+enquanto. Isso deve ser mudado quando o que for mais importante for a
+ordem alfabética.
+
+Bem, parece que por causa dessa minha gana em usar templates, preciso
+colocar todo o código dentro do header ao invés de separar. Que chato.
+Bom, pelo menos foi a solução para linkar, já que da outra forma não
+entendi como funciona - se é que existe como funcionar.
+
+
 
