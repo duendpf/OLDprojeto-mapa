@@ -8,14 +8,13 @@
 #include "abb.h"
 
 typedef struct {
-	Tree *mtree;
-} Map;
+	bst_t *mtree;
+} map_t;
 
-Map *map_create();
-bool map_insert(tipo_elem*, Map*);
-bool map_replace(tipo_elem*, Map*);
-tipo_elem* map_search(int, Map*);
-tipo_elem* map_remove(int, Map*);
-bool map_destroy(Map*);
+map_t *map_define();
+bool map_insert(elem_t *, map_t *);
+bool map_replace(elem_t *, map_t *);
+elem_t *map_search(int, map_t *);
+elem_t *map_remove(int, map_t *);
 
 #endif
