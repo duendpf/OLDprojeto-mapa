@@ -57,30 +57,30 @@ Relatório
 Para que os usuários do mapa criado possam usá-lo, as seguintes funções
 estão disponíveis em mapa.h:
 
-. map *map_create();
+. Map *map_create();
   Retorna um ponteiro para um mapa, ou NULL caso não consiga criar o
   mapa.
 
-. bool map_insert(tipo_elem*, map*);
+. bool map_insert(tipo_elem*, Map*);
   Retorna true se não existir um tipo_elem com chave igual a do
   tipo_elem passado e caso consiga inserir sem problemas. Retorna false
   caso contrário.
 
-. bool map_replace(tipo_elem*, map*);
+. bool map_replace(tipo_elem*, Map*);
   Retorna true se existir um tipo_elem com chave igual a do tipo_elem
   passado e consiga trocar o campo de dados entre eles. Retorna false
   caso contrário.
 
-. tipo_elem *map_search(int, map*);
+. tipo_elem *map_search(int, Map*);
   Retorna um ponteiro para o tipo_elem que tenha a chave passada.
   Retorna NULL caso essa chave não exista.
 
-. tipo_elem *map_remove(int, map*);
+. tipo_elem *map_remove(int, Map*);
   Retorna um ponteiro para o tipo_elem que tenha a chave passada e
   remove esse elemento do mapa. Retorna NULL caso falhe ou não exista o
   elemento com a chave passada.
 
-. bool map_destroy(map*);
+. bool map_destroy(Map*);
   Retorna true se conseguir apagar o mapa, false caso contrário.
 
 3. Descrição do projeto:
@@ -145,6 +145,27 @@ make clean		-> limpa os .o
 
 8. Problemas:
 -------------
+A implementação de árvore que tínhamos não era ABB completamente,
+tampouco lidava com o problema de identificar um nó nulo, ou seja, um nó
+folha que contivesse *nenhum* elemento dentro dele, podendo a busca
+retornar um nó existente mas nulo.
+
+Duas soluções são possíveis para esse caso. A primeira é declarar um
+ponteiro para o elemento payload, e fazer esse ponteiro nulo quando
+necessário. A segunda é eliminar das possibilidades de chaves um
+elemento, por exemplo, o zero, e dizer que um nó com um elemento de
+chave zero é um nó nulo.
+
+Outro problema, relacionado a algoritmo mal projetado tecnicamente (em
+relação a lingaugem utilziada), se refere às funções que testam o que é
+um nó (esquerdo, direito, externo...). Toda vez que uma função dessa
+recebe um ponteiro nulo como um nó, resulta em falha de segmentação.
+Para sanar tal problema, colocamos como imprescindível que o ponteiro
+não seja nulo, ou seja, usamos exit(1).
+
+Bem, a árvore binária apresentada em aula estava carregada de uma
+complexidade desmedida para o grupo, de tal sorte que decidimos
+implementar a ABB apresentada no livro do Cormen.
 
 
 9. Comentários:
