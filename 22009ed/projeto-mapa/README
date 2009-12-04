@@ -1,0 +1,28 @@
+Projeto de Estrutura de Dados:
+==============================
+
+Implementação de um mapa através de uma Árvore Binária de Busca.
+
+Projeto realizado por:
+
+KINDEROVO
+---------
+	
+	Iberê Oliveira Kuntz de Souza (no. USP 678364-8)
+	Lucas Eduardo Visolli Sala (no. USP 678365-2)
+	Raimundo de Araujo Pereira Santos (no. USP 678345-7)
+
+Estrutura do Projeto
+--------------------
+
+Este projeto segue a seguinte estrutura de diretório:
+
+README	-	Este arquivo
+doc/	-	Diretório de documentação
+src/	-	Diretório com código fonte
+
+O relatório encontra-se no diretório "doc/", em formato de texto puro
+com terminação de linhas no estilo unix e organizado conforme o
+solicitado no padrão UDF (Unit Development Folder).
+
+

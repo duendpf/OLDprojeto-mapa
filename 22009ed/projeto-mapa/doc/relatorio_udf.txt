@@ -1,0 +1,154 @@
+Projeto de Estrutura de Dados:
+==============================
+
+Implementação de um mapa através de uma Árvore Binária de Busca.
+
+Projeto realizado por:
+
+KINDEROVO
+---------
+	
+	Iberê Oliveira Kuntz de Souza (no. USP 678364-8)
+	Lucas Eduardo Visolli Sala (no. USP 678365-2)
+	Raimundo de Araujo Pereira Santos (no. USP 678345-7)
+
+Tabela Resumo
+=============
+
+			Data Programada 	Data Completada
+1. Requisitos:		04/12/2009		
+2. Interfaces externas:	04/12/2009		
+3. Desc. do projeto:	04/12/2009		
+4. Código:		04/12/2009
+5. Plano de teste:	04/12/2009
+6. Resultado testes:	04/12/2009
+7. Build procedures:	---------------
+8. Problemas:		---------------
+9. Comentários:		---------------
+10.Revisores:		computer_strike
+
+Relatório
+=========
+
+1. Requisitos:
+--------------
+
+. Implementar Mapa com Árvore Binária de Busca
+  
+  Um mapa é uma estrutura de dados que mantém acesso a eles através de
+  uma chave. Esta chave serve para buscar, portanto, para organizar os
+  dados no mapa. A própria chave não deixa de ser um dado. Então o mapa
+  armazena um par de dados.
+
+  É coerente utilizar uma ABB para implementar um mapa, pois a mesma
+  permite uma forma rápida de busca, independente de quais dados mantém
+  dentro de si.
+
+  Um exemplo de mapa é um dicionário: tem uma palavra chave e um dado
+  associado a ela. O verbete é a palavra chave e os significados são o
+  dado para o qual leva o verbete.
+
+  O mapa é unidirecional: a chave leva ao dado, mas o contrário não é
+  possível.
+
+2. Interfaces externas:
+-----------------------
+
+Para que os usuários do mapa criado possam usá-lo, as seguintes funções
+estão disponíveis em mapa.h:
+
+. map *map_create();
+  Retorna um ponteiro para um mapa, ou NULL caso não consiga criar o
+  mapa.
+
+. bool map_insert(tipo_elem*, map*);
+  Retorna true se não existir um tipo_elem com chave igual a do
+  tipo_elem passado e caso consiga inserir sem problemas. Retorna false
+  caso contrário.
+
+. bool map_replace(tipo_elem*, map*);
+  Retorna true se existir um tipo_elem com chave igual a do tipo_elem
+  passado e consiga trocar o campo de dados entre eles. Retorna false
+  caso contrário.
+
+. tipo_elem *map_search(int, map*);
+  Retorna um ponteiro para o tipo_elem que tenha a chave passada.
+  Retorna NULL caso essa chave não exista.
+
+. tipo_elem *map_remove(int, map*);
+  Retorna um ponteiro para o tipo_elem que tenha a chave passada e
+  remove esse elemento do mapa. Retorna NULL caso falhe ou não exista o
+  elemento com a chave passada.
+
+. bool map_destroy(map*);
+  Retorna true se conseguir apagar o mapa, false caso contrário.
+
+3. Descrição do projeto:
+------------------------
+
+Implementaremos a TAD Mapa colocada no site, alterando apenas os nomes
+das funções para que fiquem mais claros em sua utlização, e não
+conflitem com os nomes já existentes à TAD da ABB. todas as funções
+relativas ao mapa têm o seguinte formato:
+
+<tipo de retorno> map_<operação sobre o mapa>(<lista parâmetros>)
+
+Optamos por colocar os nomes dos arquivos todos em letras minúsculas,
+facilitando a digitação e evitando problemas com case sensitive nos
+sistemas tipo unix.
+
+Usamos a TAD de ABB entregue por Lucas Sala no Laboratório 8 - TAD de
+Árvore Binária.
+
+4. Código:
+----------
+
+O código todo encontra-se no diretório '../src/', organizado da seguinte
+forma:
+
+abb.h		- TAD da ABB
+abb.c		- implementação da TAD da ABB
+map.h		- TAD do mapa
+map.c		- implementação da TAD do mapa
+main.c		- caso de uso da TAD do mapa
+test.c		- contém código de teste para a TAD do mapa
+
+5. Plano de testes:
+-------------------
+
+Implementaremos um mapa estático através de um vetor de tipo_elem,
+contendo 500 elementos com chaves de 1 a 500 e strings aleatórias.
+
+Criaremos o mapa dinâmico.
+
+Inseriremos cada um dos elementos no mapa dinâmico da TAD, verificando
+o resultado da inserção (true ou false).
+
+Para certificar que a inserção acorreu de maneira satisfatória,
+buscaremos cada elemento e compararemos o elemento retornado com o
+elemento do mapa estático respectivo.
+
+Por fim, removeremos os elementos verificando se deu certo ou não.
+Destruiremos o mapa.
+
+6. Resultados de testes:
+------------------------
+
+7. Build procedures:
+--------------------
+
+Dentro do diretório '../src/':
+
+make debug		-> cria versão de debug do programa principal
+make release		-> cria versão de uso do programa principal
+make clean		-> limpa os .o
+
+8. Problemas:
+-------------
+
+
+9. Comentários:
+---------------
+Boa parte do projeto já tínhamos pronta: como Lucas implementou uma ABB
+no Laboratório 8 - TAD de Árvores, ficou simples adaptar tal
+implementação para fazê-la funcionar para nosso mapa. D
