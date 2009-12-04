@@ -1,86 +1,140 @@
-/*
- * Lucas Eduardo Visolli Sala - N.USP 6783652
- * Fisica Computacional - IFSC - USP
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "abb.h"
 
-bst_t *bst_define(void) {
-	tree_t *tmp = (tree_t*) malloc(sizeof(tree_t));
-	tmp->root = NULL;
-	tmp->nelem = 0;
+bst_t *bst_define() {
+	bst_t *tmpt = (bst_t*) malloc(sizeof(bst_t));
+	tmpt->troot = NULL;
 
-	return(tmp);
+	return(tmpt);
 }
 
-/* 
- * codigo inspirado de:
+/* parametros:
  *
- * http://cslibrary.stanford.edu/110/BinaryTrees.html
+ * 1o: no para inicio da busca
+ * 2o: chave a se buscar
+ */
+bstnode_t *bst_search(bstnode_t *n, int k) {
+	if(n == NULL || k == n->elem->key) {
+		return(n);
+	}
+
+	if(k < n->elem->key) {
+		return(bst_search(n->lchild, k));
+	} else {
+		return(bst_search(n->rchild, k));
+	}
+}
+
+/* parametros:
  *
- * para bst_size()
+ * 1o: no para iniciar busca pela menor chave da abb
  */
-int bst_size(node_t *n) {
-	if(n == NULL) {
-		return(0);
+bstnode_t *bst_minimum(bstnode_t *n) {
+	while(n->lchild != NULL) {
+		n = n->lchild;
+	}
+
+	return(n);
+}
+
+/* parametros:
+ *
+ * 1o: no para iniciar busca pela maior chave da abb
+ */
+bstnode_t *bst_maximum(bstnode_t *n) {
+	while(n->rchild != NULL) {
+		n = n->rchild;
+	}
+
+	return(n);
+}
+
+/* parametros:
+ *
+ * 1o: no para retornar o seu sucessor, com relacao a chave
+ */
+bstnode_t *bst_successor(bstnode_t *n) {
+	if(n->rchild != NULL) {
+		return(bst_minimum(n->rchild));
 	} else {
-		return(bst_size(n->lchild) + 1 + bst_size(n->rchild));
+		bstnode_t *y = n->parent;
+		while(y != NULL && n == y->rchild) {
+			n = y;
+			y = y->parent;
+		}
+
+		return(y);
+	}
+}
+	
+/* parametros:
+ *
+ * 1o: arvore na qual se quer inserir
+ * 2o: no a ser inserido
+ *
+ * ou seja: usuario tem de montar o no
+ */
+void bst_insert(bst_t *t, bstnode_t *n) {
+	bstnode_t *y = NULL;
+	bstnode_t *x = t->troot;
+	while(x != NULL) {
+		y = x;
+		if(n->elem->key < x->elem->key) {
+			x = x->lchild;
+		} else {
+			x = x->rchild;
+		}
+	}
+
+	n->parent = y;
+
+	if(y == NULL) {
+		t->troot = n;
+	} else if(n->elem->key < y->elem->key) {
+		y->lchild = n;
+	} else {
+		y->rchild = n;
 	}
 }
 
-
-
-void bst_swap(bst_t *t, node_t *n1, node_t *n2) {
-	if(t != NULL && n1 != NULL && n2 != NULL) {
-		elem_t *aux;
-
-		aux = n1->elem;
-		n1->elem = n2->elem;
-		n2->elem = aux;
-	} else {
-		printf("\nbst_swap(): NULL!\n");
-		exit(1);
-	}
-}
-
-
-/* 
- * retorna um ponteiro para elem_t, pois quem chama essa funcao deve ter em
- * mente que tem a responsabilidade de desalocar toda a complexidade estrutural
- * alocada para o dado em si
+/*parametros:
+ *
+ * 1o: arvore da qual se quer remover
+ * 2o: no a ser removido
  */
+bstnode_t *bst_remove(bst_t *t, bstnode_t *n) {
+	bstnode_t *y = NULL, *x = NULL;
 
-elem_t *bst_replace(bst_t *t, node_t *n, elem_t *e) {
-	if(t == NULL || n == NULL) {
-		printf("\nbst_replace(): NULL!\n");
-		exit(1);
+	if(n->lchild == NULL || n->rchild == NULL) {
+		y = n;
+	} else {
+		y = bst_successor(n);
 	}
 
-	elem_t *tmp = n->elem;
-	n->elem = e;
+	if(y->lchild != NULL) {
+		x = y->lchild;
+	} else {
+		x = y->rchild;
+	}
 
-	return(tmp);
+	if(x != NULL) {
+		x->parent = y->parent;
+	}
 
-bool bst_isempty(bst_t *);
-bool bst_isinternal(bst_t *, node_t *);
-bool bst_isexternal(bst_t *, node_t *);
-bool bst_isroot(bst_t *, node_t *);
+	if(y->parent == NULL) {
+		t->troot = x;
+	} else if(y == y->parent->lchild) {
+		y->parent->lchild = x;
+	} else {
+		y->parent->rchild = x;
+	}
 
+	if(y != n) {
+		n->elem = y->elem;
+	}
 
-node_t *bst_root(bst_t *);
-node_t *bst_parent(bst_t *, node_t *);
-node_t *bst_leftchild(bst_t *, node_t *);
-node_t *bst_rightchild(bst_t *, node_t *);
-node_t *bst_sibling(bst_t *, node_t *);
-node_t *bst_expandexternal(bst_t *, node_t *);
-node_t *bst_removeaboveexternal(bst_t *, node_t *);
-node_t *bst_insert(bst_t *, elem_t *);
-node_t *bst_insertleft(bst_t *, node_t *, elem_t *);
-node_t *bst_insertright(bst_t *, node_t *, elem_t *);
-node_t *bst_search(bst_t *, node_t *, elem_t *);
-node_t *bst_remove(bst_t *, node_t *);
-
+	return(y);
+}
 

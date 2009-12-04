@@ -16,46 +16,58 @@ typedef struct{
        void *payload;
 } elem_t;
 
-typedef struct {
-        struct node_t *parent, *lchild, *rchild;
+typedef struct bstn_t {
+        struct bstn_t *parent;
+	struct bstn_t *lchild;
+	struct bstn_t *rchild;
         elem_t *elem;
-} node_t;
+} bstnode_t;
 
 typedef struct {
-        node_t *root;
-        int nelem;
+	bstnode_t *troot;
 } bst_t;
 
-bst_t *bst_define(void);
-int bst_size(node_t *);
+bst_t *bst_define();
 
-void bst_swap(bst_t *, node_t *, node_t *);
-
-/* 
- * retorna um ponteiro para elem_t, pois quem chama essa funcao deve ter em
- * mente que tem a responsabilidade de desalocar toda a complexidade estrutural
- * alocada para o dado em si
+/* parametros:
+ *
+ * 1o: no para inicio da busca
+ * 2o: chave a se buscar
  */
+bstnode_t *bst_search(bstnode_t *, int);
 
-elem_t *bst_replace(bst_t *, node_t *, elem_t *);
+/* parametros:
+ *
+ * 1o: no para iniciar busca pela menor chave da abb
+ */
+bstnode_t *bst_minimum(bstnode_t *);
 
-bool bst_isempty(bst_t *);
-bool bst_isinternal(bst_t *, node_t *);
-bool bst_isexternal(bst_t *, node_t *);
-bool bst_isroot(bst_t *, node_t *);
+/* parametros:
+ *
+ * 1o: no para iniciar busca pela maior chave da abb
+ */
+bstnode_t *bst_maximum(bstnode_t *);
 
+/* parametros:
+ *
+ * 1o: no para retornar o seu sucessor, com relacao a chave
+ */
+bstnode_t *bst_successor(bstnode_t *);
 
-node_t *bst_root(bst_t *);
-node_t *bst_parent(bst_t *, node_t *);
-node_t *bst_leftchild(bst_t *, node_t *);
-node_t *bst_rightchild(bst_t *, node_t *);
-node_t *bst_sibling(bst_t *, node_t *);
-node_t *bst_expandexternal(bst_t *, node_t *);
-node_t *bst_removeaboveexternal(bst_t *, node_t *);
-node_t *bst_insert(bst_t *, elem_t *);
-node_t *bst_insertleft(bst_t *, node_t *, elem_t *);
-node_t *bst_insertright(bst_t *, node_t *, elem_t *);
-node_t *bst_search(bst_t *, node_t *, elem_t *);
-node_t *bst_remove(bst_t *, node_t *);
+/* parametros:
+ *
+ * 1o: arvore na qual se quer inserir
+ * 2o: no a ser inserido
+ *
+ * ou seja: usuario tem de montar o no
+ */
+void bst_insert(bst_t *, bstnode_t *);
+
+/*parametros:
+ *
+ * 1o: arvore da qual se quer remover
+ * 2o: no a ser removido
+ */
+bstnode_t *bst_remove(bst_t *, bstnode_t *);
 
 #endif
