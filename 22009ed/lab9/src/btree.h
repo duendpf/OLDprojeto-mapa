@@ -28,6 +28,8 @@ class BTNode {
 		bool		leaf;
 		int		keyTally;
 		// not the element itself, but the key of the element
+		// it could be a class that carries a pointer to the real
+		// payload and a key.
 		T		keys[MAXPAGESIZE-1];
 		BTNode<T>	*pointers[MAXPAGESIZE];
 

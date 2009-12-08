@@ -9,6 +9,6 @@ release: abb.c abb.h map.c map.h main.c
 debug: abb.c abb.h map.c map.h main.c
 	gcc -g -o main abb.c map.c main.c
 
-clean: main test *.o
+clean:
 	rm *.o main test
 
