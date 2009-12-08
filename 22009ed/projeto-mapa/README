@@ -1,28 +1,28 @@
 Projeto de Estrutura de Dados:
 ==============================
 
-Implementa��o de um mapa atrav�s de uma �rvore Bin�ria de Busca.
+Implementação de um mapa através de uma Árvore Binária de Busca.
 
 Projeto realizado por:
 
 KINDEROVO
 ---------
 	
-	Iber� Oliveira Kuntz de Souza (no. USP 678364-8)
+	Iberê Oliveira Kuntz de Souza (no. USP 678364-8)
 	Lucas Eduardo Visolli Sala (no. USP 678365-2)
 	Raimundo de Araujo Pereira Santos (no. USP 678345-7)
 
 Estrutura do Projeto
 --------------------
 
-Este projeto segue a seguinte estrutura de diret�rio:
+Este projeto segue a seguinte estrutura de diretório:
 
 README	-	Este arquivo
-doc/	-	Diretório de documenta��o
-src/	-	Diret�rio com c�digo fonte
+doc/	-	Diretório de documentação
+src/	-	Diretório com código fonte
 
-O relat�rio encontra-se no diret�rio "doc/", em formato de texto puro
-com termina��o de linhas no estilo unix e organizado conforme o
-solicitado no padr�o UDF (Unit Development Folder).
+O relatório encontra-se no diretório "doc/", em formato de texto puro
+com terminação de linhas no estilo unix e organizado conforme o
+solicitado no padrão UDF (Unit Development Folder).
 
 
