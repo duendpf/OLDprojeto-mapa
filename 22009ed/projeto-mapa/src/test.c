@@ -11,6 +11,7 @@
 /* map.h inclui abb.h */
 
 
+
 int main (void){
 	bst_t* T = bst_define();
 	elem_t *el;
@@ -173,9 +174,66 @@ int main (void){
 
 	/* *** inicio teste Mapa *** */
 	printf("\n\t ---==={INICIO TESTE MAPA}===---\n\n");
+
+	char nome[100];
+	elem_t *oelem = (elem_t*) malloc(sizeof(elem_t));
+
+	char *tmpnome;
+	elem_t *tmpe;
+
+	printf("Digite uma chave (int): ");
+	scanf("%d", &oelem->key);
+	printf("Digite um nome (max 99): ");
+	oelem->payload = nome;
+	scanf("%s", nome);
+
+	map_t *amap = map_define();
+	map_insert(oelem, amap);
+
+	tmpnome = (char*) malloc(sizeof(char)*100);
+	tmpe	= (elem_t*) malloc(sizeof(elem_t));
+	printf("Digite uma chave (int): ");
+	scanf("%d", &tmpe->key);
+	printf("Digite um nome (max 99): ");
+	scanf("%s", tmpnome);
+	tmpe->payload = tmpnome;
+
+	map_insert(tmpe, amap);
+
+	tmpnome = (char*) malloc(sizeof(char)*100);
+	tmpe	= (elem_t*) malloc(sizeof(elem_t));
+	printf("Digite uma chave (int): ");
+	scanf("%d", &tmpe->key);
+	printf("Digite um nome (max 99): ");
+	scanf("%s", tmpnome);
+	tmpe->payload = tmpnome;
+
+	map_insert(tmpe, amap);
+
+
+	printf("\nDigite uma chave: ");
+	int i = 0;
+	scanf("%d", &i);
+	if(tmpe = map_search(i, amap)) {
+		printf("%s", tmpe->payload);
+	} else {
+		printf("... nothing, at alll ....\n");
+	}
+
+	if(tmpe = map_remove(i, amap)) {
+		printf("\nRemovida chave %d contendo %s\n", i, tmpe->payload);
+	} else {
+		printf("\nremovido nada!!!! NAAADAAAAAAAAA!!!!\n");
+	}
+	if(tmpe = map_search(i, amap)) {
+		printf("%s", tmpe->payload);
+	} else {
+		printf("... nothing, at alll ....\n");
+	}
+
+
 	printf("\n\t ---==={FIM  TESTE MAPA}===---\n\n");
 	/* *** fim teste Mapa *** */
-
 	return(0);
 }
 
